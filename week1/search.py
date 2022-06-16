@@ -115,9 +115,9 @@ def create_query(user_query, filters, sort="_score", sortDir="desc"):
                     {
                         "query_string": {
                             "fields": [
-                                "name", 
-                                "shortDescription", 
-                                "longDescription", 
+                                "name^25", 
+                                "shortDescription^15", 
+                                "longDescription^5", 
                                 "department"
                                 ],
                             "query": user_query,
@@ -176,6 +176,10 @@ def create_query(user_query, filters, sort="_score", sortDir="desc"):
         },
         # Explicitly order highlighted fields
         "highlight":{
+            "number_of_fragments": 1,
+            "fragment_size": -1,
+            "pre_tags": ['<span style="color:red">'],
+            "post_tags": ["</span>"],
             "fields":{
                 "name": {},
                 "shortDescription": {},
