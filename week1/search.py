@@ -115,8 +115,8 @@ def create_query(user_query, filters, sort="_score", sortDir="desc"):
                     {
                         "query_string": {
                             "fields": [
-                                "name^25", 
-                                "shortDescription^15", 
+                                "name^50", 
+                                "shortDescription^25", 
                                 "longDescription^5", 
                                 "department"
                                 ],
@@ -157,7 +157,7 @@ def create_query(user_query, filters, sort="_score", sortDir="desc"):
                         },
                         {
                             "key": "$$$$$",
-                            "from": 500,
+                            "from": 400,
                             "to": 100000000
                         }
                     ]
