@@ -62,10 +62,31 @@ def autocomplete():
         prefix = request.args.get("prefix")
         print(f"Prefix: {prefix}")
         if prefix is not None:
-            type = request.args.get("type", "queries") # If type == queries, this is an autocomplete request, else if products, it's an instant search request.
+            # If type == queries, this is an autocomplete request, 
+            # else if products, it's an instant search request.
+            type = request.args.get("type", "queries") 
             ##### W2, L3, S1
-            search_response = None
-            print("TODO: implement autocomplete AND instant search")
+
+            # Select index
+            index_name = "bbuy_queries" if type == "queries" else "bbuy_products"
+
+            # Create the request
+            query = {
+                "suggest": {
+                    "autocomplete": {
+                        "prefix": prefix,
+                        "completion": {
+                            "field": "suggest", 
+                            "skip_duplicates": True
+                            }
+                    }
+                }
+            }
+            
+            # Submit the request
+            opensearch = get_opensearch()
+            search_response = opensearch.search(body=query, index=index_name)
+
             if (search_response and search_response['suggest']['autocomplete'] and search_response['suggest']['autocomplete'][0]['length'] > 0): # just a query response
                 results = search_response['suggest']['autocomplete'][0]['options']
     print(f"Results: {results}")
