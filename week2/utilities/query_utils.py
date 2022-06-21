@@ -161,7 +161,7 @@ def add_spelling_suggestions(query_obj, user_query):
     #### W2, L2, S1
     query_obj["suggest"] = {
        "text": user_query,
-       "phrase_suggest": {
+       "phrase_suggest": { 
             "phrase":{
                 "field":"suggest.trigrams",
                 "direct_generator": [ {
